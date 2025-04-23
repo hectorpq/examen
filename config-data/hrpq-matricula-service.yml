@@ -2,11 +2,11 @@ server:
   port: 8083
 spring:
   application:
-    name: hrpq-estudiante-service
+    name: hrpq-matricula-service
 
   # Configuración de la base de datos H2
   datasource:
-    url: jdbc:h2:mem:hrpq-estudiante;DB_CLOSE_DELAY=-1  # Usar base de datos en memoria
+    url: jdbc:h2:mem:hrpq-matricula;DB_CLOSE_DELAY=-1  # Usar base de datos en memoria
     username: sa  # Usuario por defecto para H2
     password:   # Contraseña por defecto para H2
     driver-class-name: org.h2.Driver  # Controlador H2
