@@ -18,14 +18,24 @@ public class MatriculaSeeder {
 
     @PostConstruct
     public void seed() {
+        // Verifica si ya hay registros en la base de datos antes de insertar
         if (matriculaRepository.count() == 0) {
-            Matricula m1 = new Matricula(1L, 101L, "2024-I", LocalDateTime.now());
-            Matricula m2 = new Matricula(2L, 102L, "2024-I", LocalDateTime.now());
-            Matricula m3 = new Matricula(3L, 103L, "2024-I", LocalDateTime.now());
+            insertarMatricula(12L, 1L, "2024-I");
+            insertarMatricula(13L, 2L, "2024-I");
+            insertarMatricula(14L, 3L, "2024-I");
+            insertarMatricula(16L, 4L, "2024-II");
+            insertarMatricula(17L, 5L, "2024-II");
+        }
+    }
 
-            matriculaRepository.save(m1);
-            matriculaRepository.save(m2);
-            matriculaRepository.save(m3);
+    private void insertarMatricula(Long estudianteId, Long cursoId, String ciclo) {
+        // Verificar si la matrícula ya existe
+        if (matriculaRepository.existsByEstudianteIdAndCursoId(estudianteId, cursoId)) {
+            System.out.println("Estudiante con ID " + estudianteId + " ya está matriculado en el curso con ID " + cursoId);
+        } else {
+            Matricula nuevaMatricula = new Matricula(estudianteId, cursoId, ciclo, LocalDateTime.now());
+            matriculaRepository.save(nuevaMatricula);
+            System.out.println("Matrícula insertada para el estudiante con ID " + estudianteId + " en el curso con ID " + cursoId);
         }
     }
 }
