@@ -1,0 +1,34 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: hrpq-curso-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/hrpq-curso  # Asegúrate de que la base de datos 'hrpq-curso' esté creada en MySQL
+    username: root  # O el nombre de usuario de tu base de datos
+    password:   # Asegúrate de ingresar la contraseña correcta
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # Puedes cambiarlo a 'validate' o 'none' si no quieres que se actualicen automáticamente las tablas
+    show-sql: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html  # Ruta para acceder a la documentación Swagger
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8090/eureka  # Asegúrate de que Eureka esté corriendo en este puerto
+  instance:
+    hostname: localhost
+
+profiles:
+  active: development  # Define el perfil activo
