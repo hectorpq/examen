@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface EstudianteClient {
 
     @GetMapping("/estudiantes/{id}/activo")
-    boolean validarEstudianteActivo(@PathVariable("id") Long estudianteId);
+    boolean estaActivo(@PathVariable("id") Long id);
 }

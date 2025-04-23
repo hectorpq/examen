@@ -1,11 +1,14 @@
 package com.example.hrpqmatriculaservice.service.impl;
 
 import com.example.hrpqmatriculaservice.client.CursoClient;
+import com.example.hrpqmatriculaservice.client.EstudianteClient;
 import com.example.hrpqmatriculaservice.entity.Matricula;
 import com.example.hrpqmatriculaservice.repository.MatriculaRepository;
 import com.example.hrpqmatriculaservice.service.MatriculaService;
-import com.example.hrpqmatriculaservice.client.EstudianteClient;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class MatriculaServiceImpl implements MatriculaService {
@@ -22,18 +25,27 @@ public class MatriculaServiceImpl implements MatriculaService {
 
     @Override
     public Matricula matricularEstudiante(Long estudianteId, Long cursoId, String ciclo) {
-        // Verificar que el estudiante está activo
-        if (!estudianteClient.validarEstudianteActivo(estudianteId)) {
+        boolean estaActivo = estudianteClient.estaActivo(estudianteId);
+        if (!estaActivo) {
             throw new RuntimeException("El estudiante no está activo.");
         }
 
-        // Verificar la capacidad del curso
-        if (!cursoClient.verificarCapacidadCurso(cursoId)) {
-            throw new RuntimeException("El curso no tiene capacidad suficiente.");
+        int capacidadDisponible = cursoClient.obtenerCapacidadDisponible(cursoId);
+        if (capacidadDisponible <= 0) {
+            throw new RuntimeException("El curso no tiene capacidad disponible.");
         }
 
-        // Registrar la matrícula
-        Matricula matricula = new Matricula(null, estudianteId, cursoId, ciclo, null);
+        Matricula matricula = new Matricula();
+        matricula.setEstudianteId(estudianteId);
+        matricula.setCursoId(cursoId);
+        matricula.setCiclo(ciclo);
+        matricula.setFechaMatricula(LocalDateTime.now());
+
         return matriculaRepository.save(matricula);
+    }
+
+    @Override
+    public List<Matricula> obtenerTodasLasMatriculas() {
+        return matriculaRepository.findAll();
     }
 }

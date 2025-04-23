@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "hrpq-curso-service")
 public interface CursoClient {
 
-    @GetMapping("/cursos/{id}/capacidad")
-    boolean verificarCapacidadCurso(@PathVariable("id") Long cursoId);
+    @GetMapping("/cursos/{id}/capacidad-disponible")
+    int obtenerCapacidadDisponible(@PathVariable("id") Long id);
 }
