@@ -1,6 +1,6 @@
 spring:
   application:
-    name: rpq-registry-service
+    name: hrpq-registry-service
   profiles:
     active: development
   config:

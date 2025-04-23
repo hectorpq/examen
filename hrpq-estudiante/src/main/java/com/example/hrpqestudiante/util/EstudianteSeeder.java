@@ -16,106 +16,36 @@ public class EstudianteSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Eliminar todos los estudiantes (opcional)
-        // estudianteRepository.deleteAll();
+        insertarSiNoExiste("12345678", "Carlos", "Pérez García", "carlos.perez@example.com", "987654321", "Av. Los Héroes 123", "Ingeniería de Sistemas", "activo", 3);
+        insertarSiNoExiste("87654321", "Luis", "Ramírez Soto", "luis.ramirez@example.com", "912345678", "Jr. Amazonas 456", "Derecho", "activo", 4);
+        insertarSiNoExiste("11223344", "Jorge", "Quispe Huamán", "jorge.quispe@example.com", "934567890", "Av. El Sol 789", "Administración de Empresas", "activo", 2);
+        insertarSiNoExiste("99887766", "Andrés", "Valdivia Torres", "andres.valdivia@example.com", "965432189", "Calle Lima 321", "Arquitectura", "inactivo", 5);
+        insertarSiNoExiste("44556677", "Martín", "Gómez Lazo", "martin.gomez@example.com", "923456781", "Pasaje Arequipa 654", "Medicina", "activo", 1);
+        insertarSiNoExiste("55667788", "Renato", "Suárez Castañeda", "renato.suarez@example.com", "954321789", "Jirón Tacna 159", "Ingeniería Electrónica", "activo", 3);
+        insertarSiNoExiste("77889900", "Fernando", "Lozano Díaz", "fernando.lozano@example.com", "987123456", "Av. Grau 200", "Contabilidad", "activo", 4);
+        insertarSiNoExiste("88990011", "Ricardo", "Morales Pinto", "ricardo.morales@example.com", "943216789", "Calle Ayacucho 108", "Marketing", "activo", 2);
+        insertarSiNoExiste("99001122", "Iván", "Palacios Ruiz", "ivan.palacios@example.com", "987654312", "Urbanización La Paz 777", "Ingeniería Civil", "inactivo", 6);
+        insertarSiNoExiste("10101010", "Oscar", "Vásquez Ríos", "oscar.vasquez@example.com", "951753468", "Av. Universitaria 999", "Psicología", "activo", 1);
+    }
 
-        if (estudianteRepository.count() == 0) { // Verifica si la tabla está vacía
-            // Crear 10 objetos de estudiantes con el constructor adecuado
-            Estudiante e1 = new Estudiante();
-            e1.setNombres("Carlos");
-            e1.setApellidos("Pérez García");
-            e1.setDni("12345678");
-            e1.setCorreo("carlos.perez@example.com");
-            e1.setTelefono("987654321");
-            e1.setDireccion("Av. Los Héroes 123");
-
-            Estudiante e2 = new Estudiante();
-            e2.setNombres("Luis");
-            e2.setApellidos("Ramírez Soto");
-            e2.setDni("87654321");
-            e2.setCorreo("luis.ramirez@example.com");
-            e2.setTelefono("912345678");
-            e2.setDireccion("Jr. Amazonas 456");
-
-            Estudiante e3 = new Estudiante();
-            e3.setNombres("Jorge");
-            e3.setApellidos("Quispe Huamán");
-            e3.setDni("11223344");
-            e3.setCorreo("jorge.quispe@example.com");
-            e3.setTelefono("934567890");
-            e3.setDireccion("Av. El Sol 789");
-
-            Estudiante e4 = new Estudiante();
-            e4.setNombres("Andrés");
-            e4.setApellidos("Valdivia Torres");
-            e4.setDni("99887766");
-            e4.setCorreo("andres.valdivia@example.com");
-            e4.setTelefono("965432189");
-            e4.setDireccion("Calle Lima 321");
-
-            Estudiante e5 = new Estudiante();
-            e5.setNombres("Martín");
-            e5.setApellidos("Gómez Lazo");
-            e5.setDni("44556677");
-            e5.setCorreo("martin.gomez@example.com");
-            e5.setTelefono("923456781");
-            e5.setDireccion("Pasaje Arequipa 654");
-
-            Estudiante e6 = new Estudiante();
-            e6.setNombres("Renato");
-            e6.setApellidos("Suárez Castañeda");
-            e6.setDni("55667788");
-            e6.setCorreo("renato.suarez@example.com");
-            e6.setTelefono("954321789");
-            e6.setDireccion("Jirón Tacna 159");
-
-            Estudiante e7 = new Estudiante();
-            e7.setNombres("Fernando");
-            e7.setApellidos("Lozano Díaz");
-            e7.setDni("77889900");
-            e7.setCorreo("fernando.lozano@example.com");
-            e7.setTelefono("987123456");
-            e7.setDireccion("Av. Grau 200");
-
-            Estudiante e8 = new Estudiante();
-            e8.setNombres("Ricardo");
-            e8.setApellidos("Morales Pinto");
-            e8.setDni("88990011");
-            e8.setCorreo("ricardo.morales@example.com");
-            e8.setTelefono("943216789");
-            e8.setDireccion("Calle Ayacucho 108");
-
-            Estudiante e9 = new Estudiante();
-            e9.setNombres("Iván");
-            e9.setApellidos("Palacios Ruiz");
-            e9.setDni("99001122");
-            e9.setCorreo("ivan.palacios@example.com");
-            e9.setTelefono("987654312");
-            e9.setDireccion("Urbanización La Paz 777");
-
-            Estudiante e10 = new Estudiante();
-            e10.setNombres("Oscar");
-            e10.setApellidos("Vásquez Ríos");
-            e10.setDni("10101010");
-            e10.setCorreo("oscar.vasquez@example.com");
-            e10.setTelefono("951753468");
-            e10.setDireccion("Av. Universitaria 999");
-
-            // Guardar en la base de datos
-            estudianteRepository.save(e1);
-            estudianteRepository.save(e2);
-            estudianteRepository.save(e3);
-            estudianteRepository.save(e4);
-            estudianteRepository.save(e5);
-            estudianteRepository.save(e6);
-            estudianteRepository.save(e7);
-            estudianteRepository.save(e8);
-            estudianteRepository.save(e9);
-            estudianteRepository.save(e10);
-
-            System.out.println("Datos de estudiantes insertados correctamente.");
+    private void insertarSiNoExiste(String dni, String nombres, String apellidos, String correo, String telefono, String direccion, String carrera, String estado, int cicloActual) {
+        if (estudianteRepository.findByDni(dni) == null) {
+            Estudiante e = new Estudiante();
+            e.setDni(dni);
+            e.setNombres(nombres);
+            e.setApellidos(apellidos);
+            e.setCorreo(correo);
+            e.setTelefono(telefono);
+            e.setDireccion(direccion);
+            e.setCarrera(carrera);
+            e.setEstado(estado);
+            e.setCicloActual(cicloActual);
+            estudianteRepository.save(e);
+            System.out.println("Insertado: " + nombres + " " + apellidos);
         } else {
-            System.out.println("Los estudiantes ya existen, no se insertaron datos.");
+            System.out.println("Ya existe: " + nombres + " " + apellidos);
         }
     }
 }
+
+

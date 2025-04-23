@@ -28,6 +28,15 @@ public class Estudiante {
     @Column
     private String direccion;
 
+    @Column(nullable = false)
+    private String carrera;  // Nueva propiedad
+
+    @Column(nullable = false)
+    private String estado;   // Nueva propiedad (activo, inactivo, etc.)
+
+    @Column(name = "ciclo_actual", nullable = false)
+    private Integer cicloActual;  // Nueva propiedad
+
     // Getters y Setters
 
     public Long getId() {
@@ -85,6 +94,31 @@ public class Estudiante {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Integer getCicloActual() {
+        return cicloActual;
+    }
+
+    public void setCicloActual(Integer cicloActual) {
+        this.cicloActual = cicloActual;
+    }
+
     @Override
     public String toString() {
         return "Estudiante{" +
@@ -92,10 +126,12 @@ public class Estudiante {
                 ", nombre='" + nombres + '\'' +
                 ", apellido='" + apellidos + '\'' +
                 ", dni='" + dni + '\'' +
-                ", email='" + correo + '\'' +
+                ", correo='" + correo + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", direccion='" + direccion + '\'' +
+                ", carrera='" + carrera + '\'' +
+                ", estado='" + estado + '\'' +
+                ", cicloActual=" + cicloActual +
                 '}';
     }
-
 }
