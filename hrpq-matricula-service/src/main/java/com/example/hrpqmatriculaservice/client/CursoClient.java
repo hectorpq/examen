@@ -1,0 +1,12 @@
+package com.example.hrpqmatriculaservice.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@FeignClient(name = "hrpq-curso-service")
+public interface CursoClient {
+
+    @GetMapping("/api/cursos/{id}/capacidad")
+    boolean verificarCapacidadCurso(@PathVariable("id") Long cursoId);
+}
