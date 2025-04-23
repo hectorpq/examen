@@ -1,29 +1,31 @@
 package com.example.hrpqmatriculaservice.util;
 
-
 import com.example.hrpqmatriculaservice.entity.Matricula;
 import com.example.hrpqmatriculaservice.repository.MatriculaRepository;
-import org.springframework.boot.CommandLineRunner;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
-public class MatriculaSeeder implements CommandLineRunner {
+public class MatriculaSeeder {
 
-    private final MatriculaRepository repository;
+    private final MatriculaRepository matriculaRepository;
 
-    public MatriculaSeeder(MatriculaRepository repository) {
-        this.repository = repository;
+    public MatriculaSeeder(MatriculaRepository matriculaRepository) {
+        this.matriculaRepository = matriculaRepository;
     }
 
-    @Override
-    public void run(String... args) {
-        if (repository.count() == 0) {
-            Matricula m1 = new Matricula(null, 1L, 101L, "2025-I", LocalDateTime.now());
-            Matricula m2 = new Matricula(null, 2L, 102L, "2025-I", LocalDateTime.now());
-            repository.save(m1);
-            repository.save(m2);
+    @PostConstruct
+    public void seed() {
+        if (matriculaRepository.count() == 0) {
+            Matricula m1 = new Matricula(1L, 101L, "2024-I", LocalDateTime.now());
+            Matricula m2 = new Matricula(2L, 102L, "2024-I", LocalDateTime.now());
+            Matricula m3 = new Matricula(3L, 103L, "2024-I", LocalDateTime.now());
+
+            matriculaRepository.save(m1);
+            matriculaRepository.save(m2);
+            matriculaRepository.save(m3);
         }
     }
 }

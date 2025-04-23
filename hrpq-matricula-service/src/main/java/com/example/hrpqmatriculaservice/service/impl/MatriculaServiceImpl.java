@@ -1,5 +1,6 @@
 package com.example.hrpqmatriculaservice.service.impl;
 
+import com.example.hrpqmatriculaservice.DTO.*;
 import com.example.hrpqmatriculaservice.client.CursoClient;
 import com.example.hrpqmatriculaservice.client.EstudianteClient;
 import com.example.hrpqmatriculaservice.entity.Matricula;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MatriculaServiceImpl implements MatriculaService {
@@ -17,35 +19,32 @@ public class MatriculaServiceImpl implements MatriculaService {
     private final EstudianteClient estudianteClient;
     private final CursoClient cursoClient;
 
-    public MatriculaServiceImpl(MatriculaRepository matriculaRepository, EstudianteClient estudianteClient, CursoClient cursoClient) {
-        this.matriculaRepository = matriculaRepository;
-        this.estudianteClient = estudianteClient;
-        this.cursoClient = cursoClient;
+    public MatriculaServiceImpl(MatriculaRepository repo, EstudianteClient ec, CursoClient cc) {
+        this.matriculaRepository = repo;
+        this.estudianteClient = ec;
+        this.cursoClient = cc;
     }
 
     @Override
-    public Matricula matricularEstudiante(Long estudianteId, Long cursoId, String ciclo) {
-        boolean estaActivo = estudianteClient.estaActivo(estudianteId);
-        if (!estaActivo) {
-            throw new RuntimeException("El estudiante no está activo.");
-        }
-
-        int capacidadDisponible = cursoClient.obtenerCapacidadDisponible(cursoId);
-        if (capacidadDisponible <= 0) {
-            throw new RuntimeException("El curso no tiene capacidad disponible.");
-        }
-
-        Matricula matricula = new Matricula();
-        matricula.setEstudianteId(estudianteId);
-        matricula.setCursoId(cursoId);
-        matricula.setCiclo(ciclo);
-        matricula.setFechaMatricula(LocalDateTime.now());
-
-        return matriculaRepository.save(matricula);
+    public List<MatriculaDetalleDTO> obtenerTodasLasMatriculas() {
+        return matriculaRepository.findAll().stream().map(m -> {
+            EstudianteDTO est = estudianteClient.obtenerPorId(m.getEstudianteId());
+            CursoDTO cur = cursoClient.obtenerPorId(m.getCursoId());
+            return new MatriculaDetalleDTO(m.getId(), est.getNombres(), cur.getNombre(), m.getCiclo(), m.getFechaMatricula());
+        }).collect(Collectors.toList());
     }
 
     @Override
-    public List<Matricula> obtenerTodasLasMatriculas() {
-        return matriculaRepository.findAll();
+    public MatriculaDetalleDTO matricularEstudiante(Long estudianteId, Long cursoId, String ciclo) {
+        EstudianteDTO estudiante = estudianteClient.obtenerPorId(estudianteId);
+        if (!estudiante.isActivo()) throw new RuntimeException("Estudiante inactivo");
+
+        CursoDTO curso = cursoClient.obtenerPorId(cursoId);
+        if (curso.getCapacidad() <= 0) throw new RuntimeException("Curso sin capacidad");
+
+        Matricula matricula = new Matricula(estudianteId, cursoId, ciclo, LocalDateTime.now());
+        Matricula guardada = matriculaRepository.save(matricula);
+
+        return new MatriculaDetalleDTO(guardada.getId(), estudiante.getNombres(), curso.getNombre(), guardada.getCiclo(), guardada.getFechaMatricula());
     }
 }
